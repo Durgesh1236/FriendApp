@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import router from "./routes/userRoutes.js";
 import routerAuth from "./routes/authRoute.js";
 import chatRouter from "./routes/chatRoutes.js";
+import path from "path"
 
 cloudinary.v2.config({
     cloud_name: process.env.cloud_name,
@@ -24,6 +25,14 @@ app.use(cookieParser())
 app.use("/api/user", router);
 app.use("/api/auth", routerAuth);
 app.use("/api/chat", chatRouter)
+
+const __dirname = path.resolve()
+
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+app.get(/^\/(?!api).*/,(req,res) =>{
+    res.sendFile(path.join(__dirname, "frontend","dist","index.html"));
+})
 
 app.listen(port, ()=>{
     console.log(`Server started on ${port}`);

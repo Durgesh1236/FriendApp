@@ -89,7 +89,7 @@ const Chat = () => {
         });
         toast.success("Video call link sent!");
       } catch (error) {
-        toast.error(error.message || "Failed to create stream token");
+        toast.error(error.message || "error in call function");
         console.log(error);
       }
     }
